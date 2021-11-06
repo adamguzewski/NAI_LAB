@@ -26,3 +26,15 @@ when driver lives and power of drivers car.
     1) 'risk'
     Universe: How risky is our client on a scale from 0 to 100% ?
     Fuzzy Set: low, medium, high
+
+## Rules:
+    IF 'drivers_age' is low and 'population_of_city' is high and 'car_power' is high then the 'risk' will be high
+    IF 'drivers_age' is low and 'population_of_city' is low and 'car_power' is low, then the 'risk' is medium.
+    IF 'drivers_age' is high and 'population_of_city' is low and 'car_power' is low, then the 'risk' is medium.
+    IF 'drivers_age' is high and 'population_of_city' is low and 'car_power' is high, then the 'risk' is high.
+    IF 'drivers_age' is medium and 'population_of_city' is low and 'car_power' is high, then the 'risk' is medium.
+    IF 'drivers_age' is medium and 'population_of_city' is low and 'car_power' is low, then the 'risk' is low.
+    IF 'drivers_age' is low and 'population_of_city' is medium and 'car_power' is medium, then the 'risk' is high.
+    IF 'drivers_age' is medium and 'population_of_city' is medium and 'car_power' is medium, then the 'risk' is medium.
+    IF 'drivers_age' is high and 'population_of_city' is medium and 'car_power' is medium, then the 'risk' is high.
+    IF 'drivers_age' is low and 'population_of_city' is high and 'car_power' is low, then the 'risk' is high.
