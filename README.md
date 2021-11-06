@@ -1,7 +1,7 @@
 
-#***********************************************
+
 #FUZZY CONTROL SYSTEM: Insurance Risk Assessment
-#***********************************************
+
 Author: Adam Gużewski
 
 To run program install:
