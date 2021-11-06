@@ -122,6 +122,7 @@ insurance_risk.input['car_power'] = 220
 insurance_risk.compute()
 
 print(insurance_risk.output['insurance_risk'])
+
 risk.view(sim=insurance_risk)
 
 plt.show()
