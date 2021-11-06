@@ -1,6 +1,6 @@
 """
 ***********************************************
-MACHINE LEARNING - MOVIE RECOMENDATION
+MACHINE LEARNING - Movie_Recomendation
 ***********************************************
 Author: Adam Gużewski
 """
