@@ -32,7 +32,7 @@ when driver lives and power of drivers car.
     IF 'drivers_age' is high and 'population_of_city' is low and 'car_power' is low, then the 'risk' is medium.
     IF 'drivers_age' is high and 'population_of_city' is low and 'car_power' is high, then the 'risk' is high.
     IF 'drivers_age' is medium and 'population_of_city' is low and 'car_power' is high, then the 'risk' is medium.
-        IF 'drivers_age' is medium and 'population_of_city' is low and 'car_power' is low, then the 'risk' is low.
+    IF 'drivers_age' is medium and 'population_of_city' is low and 'car_power' is low, then the 'risk' is low.
 
 -- Usage:
     If I check how risky to insure is 35 yo man, living in 4 500 000 people city and driving 150 kilowatt car,
