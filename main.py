@@ -114,8 +114,8 @@ insurance_risk = ctrl.ControlSystemSimulation(insurance_risk_control)
 '''
 Specifying the input values.
 '''
-insurance_risk.input['drivers_age'] = 18
-insurance_risk.input['population_of_city'] = 10
+insurance_risk.input['drivers_age'] = 19
+insurance_risk.input['population_of_city'] = 350
 insurance_risk.input['car_power'] = 220
 
 
