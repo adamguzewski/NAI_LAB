@@ -8,7 +8,7 @@ To run program install:
 pip install scikit-fuzzy |
 pip install matplotlib |
 
-I created a fuzzy control system which calculates the risk of insurance based on drivers age, population of the city
+Fuzzy control system which calculates the risk of insurance based on drivers age, population of the city
 when driver lives and power of drivers car.
 
 **********************************************
