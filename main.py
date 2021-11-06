@@ -33,6 +33,10 @@ when driver lives and power of drivers car.
     IF 'drivers_age' is high and 'population_of_city' is low and 'car_power' is high, then the 'risk' is high.
     IF 'drivers_age' is medium and 'population_of_city' is low and 'car_power' is high, then the 'risk' is medium.
     IF 'drivers_age' is medium and 'population_of_city' is low and 'car_power' is low, then the 'risk' is low.
+    IF 'drivers_age' is low and 'population_of_city' is medium and 'car_power' is medium, then the 'risk' is high.
+    IF 'drivers_age' is medium and 'population_of_city' is medium and 'car_power' is medium, then the 'risk' is medium.
+    IF 'drivers_age' is high and 'population_of_city' is medium and 'car_power' is medium, then the 'risk' is high.
+    IF 'drivers_age' is low and 'population_of_city' is high and 'car_power' is low, then the 'risk' is high.
 
 -- Usage:
     If I check how risky to insure is 35 yo man, living in 4 500 000 people city and driving 150 kilowatt car,
@@ -96,6 +100,10 @@ Rules:
     IF 'drivers_age' is high and 'population_of_city' is low and 'car_power' is high, then the 'risk' is high.
     IF 'drivers_age' is medium and 'population_of_city' is low and 'car_power' is high, then the 'risk' is medium.
     IF 'drivers_age' is medium and 'population_of_city' is low and 'car_power' is low, then the 'risk' is low.
+    IF 'drivers_age' is low and 'population_of_city' is medium and 'car_power' is medium, then the 'risk' is high.
+    IF 'drivers_age' is medium and 'population_of_city' is medium and 'car_power' is medium, then the 'risk' is medium.
+    IF 'drivers_age' is high and 'population_of_city' is medium and 'car_power' is medium, then the 'risk' is high.
+    IF 'drivers_age' is low and 'population_of_city' is high and 'car_power' is low, then the 'risk' is high.
 '''
 rule1 = ctrl.Rule(drivers_age['low'] | population_of_city['high'] | car_power['high'], risk['high'])
 rule2 = ctrl.Rule(drivers_age['low'] | population_of_city['low'] | car_power['low'], risk['medium'])
@@ -103,11 +111,17 @@ rule3 = ctrl.Rule(drivers_age['high'] | population_of_city['low'] | car_power['l
 rule4 = ctrl.Rule(drivers_age['high'] | population_of_city['low'] | car_power['high'], risk['high'])
 rule5 = ctrl.Rule(drivers_age['medium'] | population_of_city['low'] | car_power['high'], risk['medium'])
 rule6 = ctrl.Rule(drivers_age['medium'] | population_of_city['low'] | car_power['low'], risk['low'])
+rule7 = ctrl.Rule(drivers_age['low'] | population_of_city['medium'] | car_power['medium'], risk['high'])
+rule8 = ctrl.Rule(drivers_age['medium'] | population_of_city['medium'] | car_power['medium'], risk['medium'])
+rule9 = ctrl.Rule(drivers_age['high'] | population_of_city['medium'] | car_power['medium'], risk['high'])
+rule10 = ctrl.Rule(drivers_age['low'] | population_of_city['high'] | car_power['low'], risk['high'])
+
+
 
 '''
 Creation of control system.
 '''
-insurance_risk_control = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5, rule6])
+insurance_risk_control = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10])
 
 insurance_risk = ctrl.ControlSystemSimulation(insurance_risk_control)
 
