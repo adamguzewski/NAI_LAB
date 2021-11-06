@@ -26,10 +26,15 @@ when driver lives and power of drivers car.
     1) 'risk'
     Universe: How risky is our client on a scale from 0 to 100% ?
     Fuzzy Set: low, medium, high
-
-
-
-
+-- Rules:
+    IF 'drivers_age' is low and 'population_of_city' is high and 'car_power' is high then the 'risk' will be high
+    IF 'drivers_age' is low and 'population_of_city' is low and 'car_power' is low, then the 'risk' is medium.
+    IF 'drivers_age' is high and 'population_of_city' is low and 'car_power' is low, then the 'risk' is medium.
+    IF 'drivers_age' is high and 'population_of_city' is low and 'car_power' is high, then the 'risk' is high.
+    IF 'drivers_age' is medium and 'population_of_city' is low and 'car_power' is high, then the 'risk' is medium.
+-- Usage:
+    If I check how risky to insure is 35 yo man, living in 4 500 000 people city and driving 150 kilowatt car,
+    my system will print that the driver is 61.27% risky.
 """
 
 import matplotlib.pyplot as plt
@@ -37,12 +42,21 @@ import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 
+'''
+INPUTS/Antecedents:
+'''
 drivers_age = ctrl.Antecedent(np.arange(18, 81, 1), 'drivers_age')
 population_of_city = ctrl.Antecedent(np.arange(0, 501, 1), 'population_of_city')
 car_power = ctrl.Antecedent(np.arange(0, 221, 1), 'car_power')
 
+'''
+OUTPUT/Consequent
+'''
 risk = ctrl.Consequent(np.arange(0, 101, 1), 'insurance_risk')
 
+'''
+Custom Membership functions:
+'''
 drivers_age['low'] = fuzz.trimf(drivers_age.universe, [18, 24, 31])
 drivers_age['medium'] = fuzz.trimf(drivers_age.universe, [25, 34, 50])
 drivers_age['high'] = fuzz.trimf(drivers_age.universe, [31, 50, 80])
@@ -64,24 +78,42 @@ risk['low'] = fuzz.trimf(risk.universe, [0, 25, 50])
 risk['medium'] = fuzz.trimf(risk.universe, [25, 50, 75])
 risk['high'] = fuzz.trimf(risk.universe, [50, 75, 100])
 
+'''
+Views of the triangles
+'''
 risk.view()
 population_of_city.view()
 car_power.view()
 drivers_age.view()
 
+'''
+Rules:
+    IF 'drivers_age' is low and 'population_of_city' is high and 'car_power' is high then the 'risk' will be high
+    IF 'drivers_age' is low and 'population_of_city' is low and 'car_power' is low, then the 'risk' is medium.
+    IF 'drivers_age' is high and 'population_of_city' is low and 'car_power' is low, then the 'risk' is medium.
+    IF 'drivers_age' is high and 'population_of_city' is low and 'car_power' is high, then the 'risk' is high.
+    IF 'drivers_age' is medium and 'population_of_city' is low and 'car_power' is high, then the 'risk' is medium.
+'''
 rule1 = ctrl.Rule(drivers_age['low'] | population_of_city['high'] | car_power['high'], risk['high'])
 rule2 = ctrl.Rule(drivers_age['low'] | population_of_city['low'] | car_power['low'], risk['medium'])
 rule3 = ctrl.Rule(drivers_age['high'] | population_of_city['low'] | car_power['low'], risk['medium'])
 rule4 = ctrl.Rule(drivers_age['high'] | population_of_city['low'] | car_power['high'], risk['high'])
 rule5 = ctrl.Rule(drivers_age['medium'] | population_of_city['low'] | car_power['high'], risk['medium'])
 
+'''
+Creation of control system.
+'''
 insurance_risk_control = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5])
 
 insurance_risk = ctrl.ControlSystemSimulation(insurance_risk_control)
 
-insurance_risk.input['drivers_age'] = 35
-insurance_risk.input['population_of_city'] = 450
-insurance_risk.input['car_power'] = 100
+'''
+Specifying the input values.
+'''
+insurance_risk.input['drivers_age'] = 19
+insurance_risk.input['population_of_city'] = 350
+insurance_risk.input['car_power'] = 220
+
 
 insurance_risk.compute()
 
