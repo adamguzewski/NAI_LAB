@@ -16,10 +16,12 @@ import argparse
 import json
 import math
 
-import numpy as np
-
 
 def build_arg_parser():
+    """Function to pass parameters
+    Parameters:
+    user (string): name of user from movies.json
+    """
     parser = argparse.ArgumentParser(description='Find recommended movies for specific user')
     parser.add_argument('--user', dest='user', required=True,
                         help='Input user')
@@ -27,10 +29,21 @@ def build_arg_parser():
 
 
 def euclidean_distance(dataset, user1, user2):
+    """
+    Function measures the Euclidean distance between user1 and user2
+
+    :param dataset: (dictionary) File which contains grades of movies given from users
+    :param user1: (string) name of first user to compare
+    :param user2: (string) name of second user to compare
+
+    :return: Value (float) of Euclidean distance between user1 and user2
+    """
+    # checking if the user is in dataset
     if user1 not in dataset:
         raise TypeError(user1 + " doesn\'t exist in dataset!")
     if user2 not in dataset:
         raise TypeError(user2 + " doesn\'t exist in dataset!")
+    # movies rated by both users
     similarity = {}
     for item in dataset[user1]:
         # print(item)
@@ -38,9 +51,7 @@ def euclidean_distance(dataset, user1, user2):
             # print(item)
             similarity[item] = 1
 
-    # print(similarity)
-    # print(len(similarity))
-
+    # if there are no same movies between users then the similarity is 0
     if len(similarity) == 0:
         return 0
     # print([dataset[user1][item] for item in dataset[user1] if item in dataset[user2]])
@@ -64,41 +75,46 @@ if __name__ == '__main__':
 
 #
 def get_similar_users(dataset, user):
+    """
+    Function looking for users with similar tastes
+    :param dataset: (dictionary) File which contains grades of movies given from users
+    :param user: (string) The name of user I am looking for similar users for
+    :return: (list) Ordered list of similar users - descending
+    """
     similarity = [(euclidean_distance(dataset, user, other), other) for other in dataset if user != other]
     similarity.sort()
     similarity.reverse()
     return similarity
 
 
-# def get_top_similar_users(dataset, user, max_similar_users):
-#     similarity = [(euclidean_distance(dataset, user, other), other) for other in dataset if user != other]
-#     similarity.sort()
-#     similarity.reverse()
-#     top_users = similarity[:max_similar_users]
-#     return top_users
-
-
+# list of similar users
 all_users = get_similar_users(movies_data, user)
 
-not_fitted_list = all_users[7:]
-fitted_list = all_users[:7]
-# print('not fitted:')
-# print(not_fitted_list)
+# bad users to compare
+not_fitted_list = all_users[6:]
+# good users to compare
+fitted_list = all_users[:6]
+
 print('Best users to compare and give recommendations:')
-print('************************************************')
 print(fitted_list)
+print('**************************************************************************************************************')
 
 # Making the list of users with good match
-new_list = []
-
-print(new_list)
+users_with_good_match = []
 
 for el in range(len(not_fitted_list)):
     element = ((not_fitted_list[el])[1])
-    new_list.append(element)
+    users_with_good_match.append(element)
 
 
 def get_user_recommendation(dataset, user):
+    """
+    Function to find recommended movies based on similar users
+
+    :param dataset: (dictionary) File which contains grades of movies given from users
+    :param user: (string) The name of user for who I am looking for recommended movies
+    :return: list of tuples which contains recommended movies
+    """
     totals = {}
     sum_similarity = {}
     for other_user in dataset:
@@ -114,7 +130,6 @@ def get_user_recommendation(dataset, user):
             if item not in dataset[user]:
                 totals.setdefault(item, 0)
                 totals[item] += dataset[other_user][item] * similarity
-
                 sum_similarity.setdefault(item, 0)
                 sum_similarity[item] += similarity
 
@@ -124,8 +139,8 @@ def get_user_recommendation(dataset, user):
     return movie_recommendations
 
 
-# Removing users with bad match
-for item in new_list:
+# Removing from movies_data users with bad match
+for item in users_with_good_match:
     if item in movies_data:
         del movies_data[item]
 
@@ -135,5 +150,6 @@ all_movies = get_user_recommendation(movies_data, user)
 
 print('Five Movies recommended to watch based on others users grades:')
 print(all_movies[:5])
+print('**************************************************************************************************************')
 print('Five Movies recommended NOT! to watch based on others users grades:')
 print(all_movies[-5:])
