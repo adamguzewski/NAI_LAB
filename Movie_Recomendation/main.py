@@ -7,6 +7,8 @@ Author: Adam Gużewski
 My algorithm is used to recommend the top five movies to watch.
 Additionally, it also indicates five movies that should not be watched.
 
+At the end of script program shows short information about recommended movies
+
 To run program You should type in terminal e.g:
 py main.py --user 'Adam Guzewski'
 
