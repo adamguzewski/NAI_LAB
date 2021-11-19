@@ -10,4 +10,4 @@
 ####To run program You should type in terminal e.g:
 py main.py --user 'Adam Guzewski'
 ****************************************************************************************
-####The dataset is stored in movies.json
+####The dataset is stored in other_movies_list.json

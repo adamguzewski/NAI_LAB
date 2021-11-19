@@ -15,6 +15,7 @@ The dataset is stored in movies.json and other_movies_list.json
 import argparse
 import json
 import math
+import requests
 
 
 def build_arg_parser():
@@ -66,8 +67,8 @@ if __name__ == '__main__':
     args = build_arg_parser().parse_args()
     user = args.user
 
-    # movies_ratings = 'other_movies_list.json'
-    movies_ratings = 'movies.json'
+    movies_ratings = 'other_movies_list.json'
+    # movies_ratings = 'movies.json'
 
     with open(movies_ratings, 'r') as movies:
         movies_data = json.loads(movies.read())
@@ -153,3 +154,30 @@ print(all_movies[:5])
 print('**************************************************************************************************************')
 print('Five Movies recommended NOT! to watch based on others users grades:')
 print(all_movies[-5:])
+
+# Reading data from imdb service
+# Original name, actors and year of production
+for el in all_movies[:5]:
+    url = "https://imdb8.p.rapidapi.com/auto-complete"
+
+    querystring = {"q": el[1]}
+
+    headers = {
+        'x-rapidapi-host': "imdb8.p.rapidapi.com",
+        'x-rapidapi-key': "92af6a8ee6msh5c2bd00e6e7e890p1925cdjsn7d763ae36ca6"
+    }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+
+    json_data = json.loads(response.text)
+    # print(json_data)
+
+    # print(type(json_data))
+    original_name = json_data["d"][0]["l"]
+    cast = json_data["d"][0]["s"]
+    year_of_production = json_data["d"][0]["y"]
+    print('********************************************************************')
+    print('Information of recommended movie ', el[1], ':')
+    print('Original name of the movie: ', original_name)
+    print('Short description: ', cast)
+    print('Year of production: ', year_of_production)
