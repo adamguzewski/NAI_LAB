@@ -55,19 +55,21 @@ if __name__ == '__main__':
     args = build_arg_parser().parse_args()
     user = args.user
 
-    movies_ratings = 'other_movies_list.json'
+    # movies_ratings = 'other_movies_list.json'
+    movies_ratings = 'movies.json'
 
     with open(movies_ratings, 'r') as movies:
         movies_data = json.loads(movies.read())
 
+
 #
-# def get_similar_users(dataset, user):
-#     similarity = [(euclidean_distance(dataset, user, other), other) for other in dataset if user != other]
-#     similarity.sort()
-#     similarity.reverse()
-#     return similarity
-#
-#
+def get_similar_users(dataset, user):
+    similarity = [(euclidean_distance(dataset, user, other), other) for other in dataset if user != other]
+    similarity.sort()
+    similarity.reverse()
+    return similarity
+
+
 # def get_top_similar_users(dataset, user, max_similar_users):
 #     similarity = [(euclidean_distance(dataset, user, other), other) for other in dataset if user != other]
 #     similarity.sort()
@@ -76,14 +78,24 @@ if __name__ == '__main__':
 #     return top_users
 
 
-#
-# all_users = get_similar_users(movies_data, user)
-# top_users = get_top_similar_users(movies_data, user, 6)
+all_users = get_similar_users(movies_data, user)
 
-# print(movies_data)
-# print(all_users)
-# print('Top users: ')
-# print(top_users)
+not_fitted_list = all_users[7:]
+fitted_list = all_users[:7]
+# print('not fitted:')
+# print(not_fitted_list)
+print('Best users to compare and give recommendations:')
+print('************************************************')
+print(fitted_list)
+
+# Making the list of users with good match
+new_list = []
+
+print(new_list)
+
+for el in range(len(not_fitted_list)):
+    element = ((not_fitted_list[el])[1])
+    new_list.append(element)
 
 
 def get_user_recommendation(dataset, user):
@@ -112,11 +124,16 @@ def get_user_recommendation(dataset, user):
     return movie_recommendations
 
 
+# Removing users with bad match
+for item in new_list:
+    if item in movies_data:
+        del movies_data[item]
+
+# print(movies_data)
+
 all_movies = get_user_recommendation(movies_data, user)
 
 print('Five Movies recommended to watch based on others users grades:')
 print(all_movies[:5])
 print('Five Movies recommended NOT! to watch based on others users grades:')
 print(all_movies[-5:])
-
-# print(get_top_similar_users(movies_data, user, 5))
