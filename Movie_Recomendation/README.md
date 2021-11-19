@@ -4,8 +4,7 @@
 ### Author: Adam Gużewski
 ****************************************************************************************
 
-####My algorithm is used to recommend the top five movies to watch.
-####Additionally, it also indicates five movies that should not be watched.
+####My algorithm is used to recommend the top five movies to watch. Additionally, it also indicates five movies that should not be watched.
 ****************************************************************************************
 
 ####To run program You should type in terminal e.g:
