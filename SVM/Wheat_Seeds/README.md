@@ -7,7 +7,7 @@
 ####Support Vector Machine Classifier to classify the data
 ****************************************************************************************
 
-####To run program You should type in terminal e.g:
-py main.py
+####To run program You should type in terminal e.g: py main.py
 ****************************************************************************************
 ####The data set is stored in seeds_dataset.txt
+#### Link to data set: 
