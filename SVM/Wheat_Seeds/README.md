@@ -10,4 +10,4 @@
 ####To run program You should type in terminal e.g: py main.py
 ****************************************************************************************
 ####The data set is stored in seeds_dataset.txt
-#### Link to data set: 
+#### Link to data set: https://archive.ics.uci.edu/ml/datasets/seeds
