@@ -140,4 +140,3 @@ print(insurance_risk.output['insurance_risk'])
 risk.view(sim=insurance_risk)
 
 plt.show()
-

@@ -179,7 +179,7 @@ for el in all_movies[:5]:
     cast = json_data["d"][0]["s"]
     year_of_production = json_data["d"][0]["y"]
     print('********************************************************************')
-    print('Information of recommended movie ', el[1], ':')
-    print('Original name of the movie: ', original_name)
-    print('Short description: ', cast)
-    print('Year of production: ', year_of_production)
+    print('Information of recommended movie:', el[1], ':')
+    print('Original name of the movie:', original_name)
+    print('Short description:', cast)
+    print('Year of production:', year_of_production)
