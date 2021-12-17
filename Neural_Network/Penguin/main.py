@@ -166,10 +166,10 @@ def build_model():
 
     return model
 
-# I have tested that adam optimizer gives very similar results to adam optimizer
+# I have tested that adam optimizer gives good results
 
 
-my_callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3, restore_best_weights=True)
+my_callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
 
 all_values_loss_history = []
 all_values_scores = []
