@@ -15,7 +15,6 @@ My program is going to detect if the user has eyes open. If not it will pause th
 # Importing libraries
 import time
 import cv2 as cv
-import numpy as np
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
@@ -68,6 +67,8 @@ time.sleep(1)
 WebDriverWait(video, 5).until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Odtwórz (k)']"))).click()
 
 pause_btn = browser.find_element(By.XPATH, "//button[@aria-label='Wstrzymaj (k)']")
+# play_btn = browser.find_element(By.XPATH, "//button[@aria-label='Odtwórz (k)']")
+
 print(pause_btn)
 # pause_btn = browser.find_element(By.XPATH, "//button[@aria-label='Play']")
 # print(pause_btn)
@@ -79,14 +80,16 @@ while (True):
     # cv.imshow('You have to watch it!', frame)
 
     gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, 1.3, 3)
+    faces = face_cascade.detectMultiScale(gray, 1.3, 2)
     for (x, y, w, h) in faces:
-        cv.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
+        cv.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
         roi_gray = gray[y:y + w, x:x + w]
         roi_color = frame[y:y + h, x:x + w]
-        eyes = eye_cascade.detectMultiScale(roi_gray, 1.3, 15)
+        eyes = eye_cascade.detectMultiScale(roi_gray, 1.2, 15)
         if len(eyes) == 0:
-            print("Eyes Closed!")
+            WebDriverWait(video, 5).until(
+                EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Wstrzymaj (k)']"))).click()
+
 
         for (ex, ey, ew, eh) in eyes:
             cv.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 3)
