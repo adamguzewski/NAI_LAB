@@ -24,6 +24,7 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Flatten, add, Dense
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 # Data loading
@@ -121,7 +122,8 @@ model.summary()
 
 # Training model
 
-history = model.fit(X_train, y_train, epochs=50, verbose=1, batch_size=256, validation_data=(X_val, y_val), callbacks=[EarlyStop])
+history = model.fit(X_train, y_train, epochs=50, verbose=1, batch_size=256, validation_data=(X_val, y_val),
+                    callbacks=[EarlyStop])
 
 # Creating the plots of loss and accuracy
 
@@ -173,7 +175,6 @@ def plot_value_img(i, predictions, true_label, img):
     thisplot = plt.barh(range(10), predictions, color='gray')
     thisplot[predicted_label].set_color('r')
     thisplot[true_value].set_color('g')
-
     plt.subplot(1, 2, 2)
 
     plt.imshow(img, cmap=plt.cm.binary)
@@ -188,4 +189,4 @@ def plot_value_img(i, predictions, true_label, img):
     plt.show()
 
 
-plot_value_img(6543, y_val_pred, y_val, X_val)
+plot_value_img(8754, y_val_pred, y_val, X_val)
