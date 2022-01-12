@@ -46,10 +46,10 @@ def rescale_frame(frame, percent=75):
 face_cascade = cv.CascadeClassifier(cv.data.haarcascades + "haarcascade_frontalface_default.xml")
 eye_cascade = cv.CascadeClassifier(cv.data.haarcascades + "haarcascade_eye.xml")
 
-# Choosing Chrome
-browser_service = Service(chromedriver_path)
 # Creating an instance of Chrome
+browser_service = Service(chromedriver_path)
 browser = webdriver.Chrome(service=browser_service)
+# Maximizing the window
 browser.maximize_window()
 # Opening Ads
 browser.get(url)
@@ -58,25 +58,33 @@ WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.LINK_TEXT, b
 
 print(browser.title)
 
+# Finding the video player
 video = browser.find_element(By.ID, 'movie_player')
 # I need to pause the app to load the window and pause button
 time.sleep(1)
 pause_btn = browser.find_element(By.XPATH, "//button[@aria-label='Wstrzymaj (k)']")
 
+# Creating a variable to store the status of movie play/pause
 status = 'play'
 while True:
     ret, frame = cap.read()
 
+# converting the video to grayscale, because algorithms can only detect faces and eyes in grayscale
     gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+# I am going to save all faces in video
     faces = face_cascade.detectMultiScale(gray, 1.3, 3)
     for (x, y, w, h) in faces:
+        # getting all faces in rectangles
         cv.rectangle(frame, (x, y), (x + w, y + h), (255, 176, 34), 2)
         roi_gray = gray[y:y + w, x:x + w]
         roi_color = frame[y:y + h, x:x + w]
+        # In all faces I'm going to find all eyes
         eyes = eye_cascade.detectMultiScale(roi_gray, 1.3, 15)
         for (ex, ey, ew, eh) in eyes:
+            # getting all eyes in rectangles
             cv.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (96, 215, 30), 2)
 
+        # The loop is going to stop the movie if the user has the eyes closed and play the movie if the eyes are open
         if len(eyes) > 0:
             if status == 'play':
                 continue
@@ -95,6 +103,7 @@ while True:
             elif status == 'pause':
                 continue
 
+    # image displaying
     rescaled_frame = rescale_frame(frame, percent=150)
     cv.imshow('You have to watch it!', rescaled_frame)
     if cv.waitKey(1) == ord('q'):
