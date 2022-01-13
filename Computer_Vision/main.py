@@ -90,8 +90,8 @@ while True:
                 continue
             elif status == 'pause':
                 status = 'play'
-                WebDriverWait(video, 5).until(
-                    EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Odtwórz (k)']"))).click()
+                play_btn = browser.find_element(By.XPATH, "//button[@aria-label='Odtwórz (k)']")
+                play_btn.click()
                 print('Playing advertisements')
                 continue
         if len(eyes) == 0:
